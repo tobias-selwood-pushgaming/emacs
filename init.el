@@ -81,8 +81,10 @@
 	    (setq c-basic-offset 4)))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
+;; --gcc-install-dir=/usr/lib64/gcc/x86_64-generic-linux/9
 (use-package eglot :ensure t)
-(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+;;(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd" "-j=10")))
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 (eldoc-add-command 'c-electric-paren)
@@ -94,7 +96,7 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 
-;; auto revert mode
+;; auto revert modep
 (global-auto-revert-mode 1)
 (add-hook 'dired-mode-hook 'auto-revert-mode)
 
@@ -103,7 +105,7 @@
 (add-hook 'markdown-mode-hook 'turn-on-flyspell)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
 
-;; (defun risky-local-variable-p (sym &optional _ignored) nil)
+
 
 
 ;; Python. (Should look at porting to eglot.
@@ -115,3 +117,7 @@
                                                       (propertize "f" 'face 'bold))
                                               'elpy-format-code))
 (setq elpy-rpc-python-command "python")
+
+
+;; Speedbar
+(setq speedbar-show-unknown-files t)
