@@ -89,11 +89,12 @@
 	 ("C-c r f" . eglot-code-actions))
   :config (
 	   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd" "-j=10")))
-	   (add-hook 'c-mode-hook 'eglot-ensure)
-	   (add-hook 'c++-mode-hook 'eglot-ensure)
 	   (eldoc-add-command 'c-electric-paren))
 
-)
+  )
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+
 ;;(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
 ;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd" "-j=10")))
 ;; (add-hook 'c-mode-hook 'eglot-ensure)
