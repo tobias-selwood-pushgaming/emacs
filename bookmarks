@@ -3,9 +3,9 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
- (filename . "~/Dropbox/org-roam/20240624140507-githubactions.org")
+ (filename . "~/Dropbox/org-roam/20240807173340-x_windows.org")
  (front-context-string)
- (rear-context-string . ": githubactions\n")
- (position . 91)
- (last-modified 26233 28421 102049 102000))
+ (rear-context-string . "itle: X Windows\n")
+ (position . 87)
+ (last-modified 26291 41447 284557 563000))
 )

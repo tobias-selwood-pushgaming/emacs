@@ -6,11 +6,12 @@
  '(cua-mode t)
  '(custom-enabled-themes '(deeper-blue))
  '(package-selected-packages
-   '(elpy cmake-mode yaml-mode company ag magit counsel counsel-projectile ivy projectile org-roam))
+   '(wgrep wgrep-ag elpy cmake-mode yaml-mode company ag magit counsel counsel-projectile ivy projectile org-roam))
  '(safe-local-variable-values
-   '((projectile-project-test-cmd . "cmake --build build -j 16 && cd build/src/land-tech-test/ && ctest --output-on-failure")
+   '((projectile-project-run-cmd . "cmake --build build -j 16 && cd build/bin && ./main")
+     (projectile-project-test-cmd . "cmake --build build -j 16 && cd build/src/land-tech-test/ && ctest --output-on-failure")
      (projectile-project-test-cmd . "cd build/src/land-tech-test/ && ctest --output-on-failure")
-     (projectile-project-run-cmd . "cd build/Debug/ && ./land-tech")
+     (projectile-project-run-cmd . "cmake --build build -j 16 && cd build/Debug/ && ./land-tech")
      (projectile-project-compilation-cmd . "cmake --build build -j 16"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -81,13 +82,23 @@
 	    (setq c-basic-offset 4)))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
-;; --gcc-install-dir=/usr/lib64/gcc/x86_64-generic-linux/9
-(use-package eglot :ensure t)
+(use-package eglot
+  :ensure t
+  :bind (
+	 ("C-c r r" . eglot-rename)
+	 ("C-c r f" . eglot-code-actions))
+  :config (
+	   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd" "-j=10")))
+	   (add-hook 'c-mode-hook 'eglot-ensure)
+	   (add-hook 'c++-mode-hook 'eglot-ensure)
+	   (eldoc-add-command 'c-electric-paren))
+
+)
 ;;(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-(add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd" "-j=10")))
-(add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
-(eldoc-add-command 'c-electric-paren)
+;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd" "-j=10")))
+;; (add-hook 'c-mode-hook 'eglot-ensure)
+;; (add-hook 'c++-mode-hook 'eglot-ensure)
+;; (eldoc-add-command 'c-electric-paren)
 
 (global-set-key (kbd "C->") 'xref-find-definitions-other-window)
 (global-set-key (kbd "C-.") 'xref-find-definitions)
@@ -99,6 +110,7 @@
 ;; auto revert modep
 (global-auto-revert-mode 1)
 (add-hook 'dired-mode-hook 'auto-revert-mode)
+(setq auto-revert-verbose nil)
 
 
 ;; Seplcheck
@@ -106,7 +118,10 @@
 (add-hook 'text-mode-hook 'turn-on-flyspell)
 
 
-
+;; flymake
+(require 'flymake)
+(define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
+(define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 
 ;; Python. (Should look at porting to eglot.
 (elpy-enable)

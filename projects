@@ -1,3 +1,6 @@
 ;;; -*- lisp-data -*-
 (("/home/tobias/src/land-tech/")
+ ("/home/tobias/projects/sfml-tutorial/")
+ ("/home/tobias/projects/linux_libs/")
+ ("/home/tobias/projects/infernowheelspooky/")
  ("/home/tobias/projects/linux-java/"))
